@@ -36,7 +36,7 @@ for var, (k, hint_degree) in HINT.items():
     h = hint[hint.degree == hint_degree].iloc[0]
     plt.scatter([hint_degree], [h.cv_mse], s=220, facecolors="none", edgecolors="k", zorder=5,
                 label=f"{label}, degree {hint_degree} (MSE {h.cv_mse:.2f})")
-    plt.yscale("log"); plt.xlabel("polynomial degree"); plt.ylabel("5-fold CV MSE (log scale)")
+    plt.yscale("log"); plt.xlabel("polynomial degree"); plt.ylabel("7-fold CV MSE (log scale)")
     plt.title(f"var{var}: {label} vs all features")
     plt.legend(fontsize=8); plt.grid(alpha=0.3)
     plt.savefig(f"results/hint_var{var}.png", dpi=150, bbox_inches="tight"); plt.close()

@@ -106,13 +106,13 @@ def predict(m, X):
 
 
 # ---------------------------------------------------------------- cross-validation
-def kfold_indices(n, k=5, seed=0):
+def kfold_indices(n, k=7, seed=0):
     """Shuffle the row indices and split them into k blocks."""
     idx = np.random.default_rng(seed).permutation(n)
     return np.array_split(idx, k)
 
 
-def cv_mse(X, y, degree, model, k=5, seed=0):
+def cv_mse(X, y, degree, model, k=7, seed=0):
     """K-fold CV. Returns the mean and the std-dev (across folds) of the validation MSE
     for every lambda in the grid."""
     folds = kfold_indices(len(y), k, seed)

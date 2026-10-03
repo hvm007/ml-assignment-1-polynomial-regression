@@ -2,7 +2,7 @@
 Training (NumPy only).   python train.py        -> both problems
                           python train.py 1      -> only var1
 
-For every degree and every model (OLS / Ridge / Lasso) we run 5-fold CV, keep the best
+For every degree and every model (OLS / Ridge / Lasso) we run 7-fold CV, keep the best
 lambda, and finally choose the lowest degree whose CV MSE is within 2% of the best.
 """
 import sys
@@ -44,7 +44,7 @@ def train(var):
     # plot 1: CV MSE vs degree
     for name, g in res.groupby("model"):
         plt.plot(g.degree, g.cv_mse, marker="o", label=name)
-    plt.yscale("log"); plt.xlabel("polynomial degree"); plt.ylabel("5-fold CV MSE (log scale)")
+    plt.yscale("log"); plt.xlabel("polynomial degree"); plt.ylabel("7-fold CV MSE (log scale)")
     plt.title(f"var{var}: model selection"); plt.legend(); plt.grid(alpha=0.3)
     plt.savefig(f"results/cv_var{var}.png", dpi=150, bbox_inches="tight"); plt.close()
 
