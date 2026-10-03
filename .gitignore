@@ -3,6 +3,5 @@ _to_delete/
 Claude outputs/
 ML_Assignment_1.pdf
 sample_submission.csv
-results/sklearn_cv_var*.csv
 *.aux
 *.log

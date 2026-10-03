@@ -10,7 +10,5 @@ Polynomial regression written from scratch in NumPy.
 - `train.py` - model selection and final fit
 - `predict.py` - inference on the test files
 - `feature_subsets.py` - degree sweep for every subset of the input features (63 for var1, 7 for var2)
-- `hint_comparison.py` - restricted feature subset vs all features (run after train.py)
 - `export_weights.py` - writes the fitted weights per term to `results/weights_var<k>.csv` (run after train.py)
-- `reference_sklearn.py` - scikit-learn version, used only to cross-check the NumPy results
 - `results/` - CV tables, CV-MSE-vs-degree plots, predicted-vs-actual plots
