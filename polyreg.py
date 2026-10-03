@@ -3,9 +3,9 @@ Polynomial regression from scratch (NumPy only).
 
 Model:  y = w0 + sum_j w_j * phi_j(x)   where phi_j are all monomials of the inputs up to degree d.
 The weights are fitted by
-    OLS    minimise (1/N)  ||y - Phi w||^2
-    Ridge  minimise (1/N)  ||y - Phi w||^2 + lam * ||w||_2^2      (L2)
-    Lasso  minimise (1/2N) ||y - Phi w||^2 + lam * ||w||_1        (L1)
+    Least squares  minimise (1/N)  ||y - Phi w||^2
+    Ridge          minimise (1/N)  ||y - Phi w||^2 + lam * ||w||_2^2      (L2)
+    Lasso          minimise (1/2N) ||y - Phi w||^2 + lam * ||w||_1        (L1)
 """
 from itertools import combinations_with_replacement
 import numpy as np
@@ -38,7 +38,7 @@ def poly_features(X, powers):
 # ---------------------------------------------------------------- solvers
 # All solvers receive standardised features Z (zero mean, unit std) and centred y,
 # so no intercept is needed inside them.
-def fit_ols(Z, y):
+def fit_least_squares(Z, y):
     # least squares via SVD (stable even when Z'Z is ill-conditioned)
     return np.linalg.lstsq(Z, y, rcond=None)[0]
 
@@ -72,7 +72,7 @@ def fit_lasso(Z, y, lam, w=None, max_sweeps=300, tol=1e-4):
 
 # ---------------------------------------------------------------- model wrapper
 LAMBDAS = {
-    "OLS": [0.0],
+    "Least squares": [0.0],
     "Ridge": list(np.logspace(-6, 1, 15)),
     "Lasso": list(np.logspace(-1, -3, 9)),   # large -> small so each fit warm-starts the next
 }
@@ -89,8 +89,8 @@ def fit_path(X, y, degree, model):
 
     fitted, w = [], None
     for lam in LAMBDAS[model]:
-        if model == "OLS":
-            w = fit_ols(Z, yc)
+        if model == "Least squares":
+            w = fit_least_squares(Z, yc)
         elif model == "Ridge":
             w = fit_ridge(Z, yc, lam)
         else:

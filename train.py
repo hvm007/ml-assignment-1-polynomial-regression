@@ -2,7 +2,7 @@
 Training (NumPy only).   python train.py        -> both problems
                           python train.py 1      -> only var1
 
-For every degree and every model (OLS / Ridge / Lasso) we run 7-fold CV, keep the best
+For every degree and every model (least squares / Ridge / Lasso) we run 7-fold CV, keep the best
 lambda, and finally choose the lowest degree whose CV MSE is within 2% of the best.
 """
 import sys
@@ -23,12 +23,12 @@ def train(var):
 
     rows = []
     for degree in range(1, MAX_DEGREE[var] + 1):
-        for model in ("OLS", "Ridge", "Lasso"):
+        for model in ("Least squares", "Ridge", "Lasso"):
             mse, std = cv_mse(X, y, degree, model)
             best = int(np.argmin(mse))
             rows.append({"degree": degree, "model": model, "lam": LAMBDAS[model][best],
                          "cv_mse": mse[best], "cv_std": std[best], "cv_r2": 1 - mse[best] / y.var()})
-            print(f"var{var}  degree={degree:2d}  {model:5s}  lam={LAMBDAS[model][best]:.2e}  "
+            print(f"var{var}  degree={degree:2d}  {model:13s}  lam={LAMBDAS[model][best]:.2e}  "
                   f"CV MSE={mse[best]:.4f} +- {std[best]:.4f}", flush=True)
     res = pd.DataFrame(rows)
     res.to_csv(f"results/cv_var{var}.csv", index=False)

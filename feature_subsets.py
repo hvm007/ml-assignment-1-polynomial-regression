@@ -1,9 +1,9 @@
 """
 Feature-subset study: for every non-empty subset of the input features, sweep the polynomial
-degree with OLS and Ridge (7-fold CV) and record the best setting for that subset.
+degree with least squares and Ridge (7-fold CV) and record the best setting for that subset.
    var1: 63 subsets of 6 features      var2: 7 subsets of 3 features
 Usage: python feature_subsets.py [1|2]
-Lasso is left out here to keep the run short; OLS and Ridge are both closed-form.
+Lasso is left out here to keep the run short; least squares and Ridge are both closed-form.
 """
 import sys
 from itertools import combinations
@@ -28,7 +28,7 @@ def study(var):
         for subset in combinations(range(D), size):
             best = None
             for degree in range(1, MAX_DEGREE[var] + 1):
-                for model in ("OLS", "Ridge"):
+                for model in ("Least squares", "Ridge"):
                     mse, std = cv_mse(X[:, subset], y, degree, model)
                     i = int(np.argmin(mse))
                     if best is None or mse[i] < best["cv_mse"]:
@@ -36,7 +36,7 @@ def study(var):
                                 "degree": degree, "model": model, "lam": LAMBDAS[model][i],
                                 "cv_mse": mse[i], "cv_std": std[i], "cv_r2": 1 - mse[i] / y.var()}
             rows.append(best)
-            print(f"var{var}  {best['features']:18s} best: degree {best['degree']:2d} {best['model']:5s} "
+            print(f"var{var}  {best['features']:18s} best: degree {best['degree']:2d} {best["model"]:13s} "
                   f"CV MSE={best['cv_mse']:.3f}", flush=True)
     res = pd.DataFrame(rows).sort_values("cv_mse")
     res.to_csv(f"results/subsets_var{var}.csv", index=False)

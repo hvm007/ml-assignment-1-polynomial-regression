@@ -6,7 +6,7 @@ Polynomial regression written from scratch in NumPy.
     python train.py      # 7-fold CV over degree, model and lambda; saves models/ and results/
     python predict.py    # writes BT2024251_pred_var1.csv and BT2024251_pred_var2.csv
 
-- `polyreg.py` - polynomial features, OLS, Ridge (closed form), Lasso (coordinate descent), K-fold CV
+- `polyreg.py` - polynomial features, least squares, Ridge (closed form), Lasso (coordinate descent), K-fold CV
 - `train.py` - model selection and final fit
 - `predict.py` - inference on the test files
 - `feature_subsets.py` - degree sweep for every subset of the input features (63 for var1, 7 for var2)
