@@ -1,0 +1,15 @@
+# ML Assignment 1 - Polynomial Regression (BT2024251)
+
+Polynomial regression written from scratch in NumPy.
+
+    pip install -r requirements.txt
+    python train.py      # 5-fold CV over degree, model and lambda; saves models/ and results/
+    python predict.py    # writes BT2024251_pred_var1.csv and BT2024251_pred_var2.csv
+
+- `polyreg.py` - polynomial features, OLS, Ridge (closed form), Lasso (coordinate descent), K-fold CV
+- `train.py` - model selection and final fit
+- `predict.py` - inference on the test files
+- `hint_comparison.py` - restricted feature subset vs all features (run after train.py)
+- `export_weights.py` - writes the fitted weights per term to `results/weights_var<k>.csv` (run after train.py)
+- `reference_sklearn.py` - scikit-learn version, used only to cross-check the NumPy results
+- `results/` - CV tables, CV-MSE-vs-degree plots, predicted-vs-actual plots
